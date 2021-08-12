@@ -1,0 +1,10 @@
+.navbar-brand{
+    color: white!important;
+    font-weight: bold;
+}
+.nav-link{
+    color: white!important;
+}
+.nav-link:hover{
+    color: greenyellow!important;
+}

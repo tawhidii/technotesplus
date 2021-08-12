@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Register{% endblock title %}
+{% block content %}
+
+    <div class="container">
+    <div class="card bg-light">
+    <article class="card-body mx-auto" style="max-width: 400px;">
+        <h3 style="text-align: center;">Create Account</h3>
+        <br/>
+
+        {% include 'message.html' %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                 </div>
+                {{ form.first_name }}
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                 </div>
+                {{ form.last_name }}
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                 </div>
+                {{ form.username }}
+            </div> <!-- form-group// -->
+              <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
+                 </div>
+                    {{ form.email }}
+            </div> <!-- form-group// -->
+
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                {{ form.password }}
+            </div> <!-- form-group// -->
+            <div class="form-group input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
+                </div>
+                {{ form.password2 }}
+            </div> <!-- form-group// -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Create Account  </button>
+            </div> <!-- form-group// -->
+            <p class="text-center">Have an account? <a href="{% url 'accounts:login' %}">Log In</a> </p>
+    </form>
+    </article>
+</div> <!-- card.// -->
+
+</div>
+<!--container end.//-->
+
+{% endblock content %}
