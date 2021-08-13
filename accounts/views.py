@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import update_session_auth_hash
 from .forms import (
     RegistrationForm,
-    LoginForm
+    LoginForm,
+
 )
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
@@ -58,7 +61,7 @@ def register(request):
             new_user.email_user(subject, message)  ## Send Email
 
             messages.success(request, 'Registration Done. Please check email to confirm account')
-            return redirect('accounts:register')
+            return redirect('register')
     else:
         form = RegistrationForm()
     context = {
@@ -89,12 +92,33 @@ class ActivateAccount(View):
             return redirect('accounts:login')
         else:
             messages.warning(request, 'The confirmation link was invalid, possibly because it has already been used.')
-            return redirect('accounts:login')
+            return redirect('login')
 
 
 # logout view
 def user_logout(request):
     logout(request)
-    messages.success(request,'Logged out !! you can login again here.')
-    return redirect('accounts:login')
+    messages.success(request, 'Logged out !! you can login again here.')
+    return redirect('login')
 
+
+# user profile view
+def user_profile(request, username):
+    user = get_object_or_404(Profile, user__username=username)
+    return render(request, 'accounts/profile.html', {'user': user})
+
+
+# change user password from profile section view
+def change_user_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Password Changed Successfully')
+            return redirect('profile', username=request.user)
+        else:
+            messages.error('Please check it again')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'accounts/change_password.html', {'form': form})
