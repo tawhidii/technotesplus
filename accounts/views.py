@@ -90,3 +90,11 @@ class ActivateAccount(View):
         else:
             messages.warning(request, 'The confirmation link was invalid, possibly because it has already been used.')
             return redirect('accounts:login')
+
+
+# logout view
+def user_logout(request):
+    logout(request)
+    messages.success(request,'Logged out !! you can login again here.')
+    return redirect('accounts:login')
+
