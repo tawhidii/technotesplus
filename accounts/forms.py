@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 class LoginForm(forms.Form):
@@ -41,3 +42,5 @@ class RegistrationForm(forms.ModelForm):
         except User.DoesNotExist:
             return email
         raise forms.ValidationError('This email address already in use')
+
+

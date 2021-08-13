@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}User profile {% endblock %}
+{% block content %}
+    <br>
+    <br>
+    {% include 'message.html' %}
+    <div class="profile">
+      <h1>{{ user.user.first_name }} {{ user.user.last_name }}</h1>
+      <p class="title">Email:{{ user.user.email }}</p>
+      <p>Email Confirmed : {{ user.email_confirmed }}</p>
+      <button type="submit"><a href="{% url 'change-password' %}">Change Password</a></button>
+</div>
+{% endblock %}
